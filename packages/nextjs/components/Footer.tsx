@@ -1,20 +1,20 @@
 import React from "react";
-import Link from "next/link";
-import { hardhat } from "viem/chains";
-import { CurrencyDollarIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import Image from "next/image";
+import { useTheme } from "next-themes";
+import { CurrencyDollarIcon } from "@heroicons/react/24/outline";
 import { HeartIcon } from "@heroicons/react/24/outline";
 import { SwitchTheme } from "~~/components/SwitchTheme";
 import { BuidlGuidlLogo } from "~~/components/assets/BuidlGuidlLogo";
-import { Faucet } from "~~/components/scaffold-eth";
 import { useGlobalState } from "~~/services/store/store";
-import { getTargetNetwork } from "~~/utils/scaffold-eth";
 
 /**
  * Site footer
  */
 export const Footer = () => {
   const nativeCurrencyPrice = useGlobalState(state => state.nativeCurrencyPrice);
-  const isLocalNetwork = getTargetNetwork().id === hardhat.id;
+  const { resolvedTheme } = useTheme();
+
+  const isDarkMode = resolvedTheme === "dark";
 
   return (
     <div className="min-h-0 py-5 px-1 mb-11 lg:mb-0">
@@ -23,30 +23,26 @@ export const Footer = () => {
           <div className="flex flex-col md:flex-row gap-2 pointer-events-auto">
             {nativeCurrencyPrice > 0 && (
               <div>
-                <div className="btn btn-primary btn-sm font-normal normal-case gap-1 cursor-auto">
+                <div className="btn btn-primary btn-sm font-normal gap-1 cursor-auto">
                   <CurrencyDollarIcon className="h-4 w-4" />
                   <span>{nativeCurrencyPrice}</span>
                 </div>
               </div>
             )}
-            {isLocalNetwork && (
-              <>
-                <Faucet />
-                <Link href="/blockexplorer" passHref className="btn btn-primary btn-sm font-normal normal-case gap-1">
-                  <MagnifyingGlassIcon className="h-4 w-4" />
-                  <span>Block Explorer</span>
-                </Link>
-              </>
-            )}
           </div>
-          <SwitchTheme className={`pointer-events-auto ${isLocalNetwork ? "self-end md:self-auto" : ""}`} />
+          <SwitchTheme className="pointer-events-auto" />
         </div>
       </div>
       <div className="w-full">
         <ul className="menu menu-horizontal w-full">
           <div className="flex justify-center items-center gap-2 text-sm w-full">
             <div className="text-center">
-              <a href="https://github.com/scaffold-eth/se-2" target="_blank" rel="noreferrer" className="link">
+              <a
+                href="https://github.com/BuidlGuidl/zupass-smart-wallet"
+                target="_blank"
+                rel="noreferrer"
+                className="link"
+              >
                 Fork me
               </a>
             </div>
@@ -64,11 +60,25 @@ export const Footer = () => {
                 <BuidlGuidlLogo className="w-3 h-5 pb-1" />
                 <span className="link">BuidlGuidl</span>
               </a>
-            </div>
-            <span>·</span>
-            <div className="text-center">
-              <a href="https://t.me/joinchat/KByvmRe5wkR-8F_zz6AjpA" target="_blank" rel="noreferrer" className="link">
-                Support
+              with
+              <a
+                className="flex justify-center items-center gap-1"
+                href="https://www.zupass.org"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <Image src={"/zupass.jpeg"} width={16} height={16} alt="Zupass" />
+                <span className="link">Zupass</span>
+              </a>
+              and
+              <a
+                className="flex justify-center items-center gap-1"
+                href="https://www.alchemy.com"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <Image src={isDarkMode ? "/alchemy-light.png" : "/alchemy.png"} width={16} height={16} alt="Alchemy" />
+                <span className="link">Alchemy</span>
               </a>
             </div>
           </div>

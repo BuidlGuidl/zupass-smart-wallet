@@ -1,13 +1,14 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}", "./utils/**/*.{js,ts,jsx,tsx}"],
+  content: ["./app/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}", "./utils/**/*.{js,ts,jsx,tsx}"],
   plugins: [require("daisyui")],
-  darkTheme: "scaffoldEthDark",
+  darkTheme: "dark",
+  darkMode: ["selector", "[data-theme='dark']"],
   // DaisyUI theme colors
   daisyui: {
     themes: [
       {
-        scaffoldEth: {
+        light: {
           primary: "#93BBFB",
           "primary-content": "#212638",
           secondary: "#DAE8FF",
@@ -39,7 +40,7 @@ module.exports = {
         },
       },
       {
-        scaffoldEthDark: {
+        dark: {
           primary: "#212638",
           "primary-content": "#F9FBFF",
           secondary: "#323f61",
@@ -61,7 +62,7 @@ module.exports = {
 
           ".tooltip": {
             "--tooltip-tail": "6px",
-            "--tooltip-color": "hsl(var(--p))",
+            "--tooltip-color": "oklch(var(--p))",
           },
           ".link": {
             textUnderlineOffset: "2px",
