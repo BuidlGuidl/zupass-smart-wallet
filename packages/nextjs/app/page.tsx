@@ -48,7 +48,7 @@ const Home: NextPage = () => {
   //   args: [pcd ? generateWitness(JSON.parse(pcd)) : undefined],
   // });
 
-  const { data: yourBalance } = useScaffoldReadContract({
+  const { data: yourBalance, isLoading: isLoadingBalance } = useScaffoldReadContract({
     contractName: "YourCollectible",
     functionName: "balanceOf",
     args: [connectedAddress],
@@ -99,7 +99,7 @@ const Home: NextPage = () => {
                     setVerifiedOnChain(true);
                   }}
                 >
-                  {isMintingNFT ? <span className="loading loading-spinner"></span> : "4. Verify (on-chain) and mint"}
+                  {isMintingNFT ? <span className="loading loading-spinner"></span> : "2. Verify (on-chain) and mint"}
                 </button>
               </div>
               <div className="flex justify-center">
@@ -113,8 +113,17 @@ const Home: NextPage = () => {
                 </button>
               </div>
 
-              <div className="text-center text-lg">
-                {yourBalance && yourBalance >= 1n ? `NFT Balance: ${Number(yourBalance)}` : ""}
+              <div className=" text-lg flex justify-center items-center">
+                NFT Balance:
+                {isMintingNFT || isLoadingBalance ? (
+                  <div className="animate-pulse ">
+                    <div className="w-4 h-4 ml-2 bg-slate-300"></div>
+                  </div>
+                ) : yourBalance && yourBalance >= 1n ? (
+                  ` ${Number(yourBalance)}`
+                ) : (
+                  " 0"
+                )}
               </div>
             </div>
           </div>
