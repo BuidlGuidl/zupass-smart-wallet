@@ -99,7 +99,7 @@ contract YourCollectible is ERC721, Groth16Verifier {
 		verifiedProof(proof)
 		validEventIds(proof._pubSignals)
 		validSigner(proof._pubSignals)
-		notMinted
+		// notMinted
 	{
 		uint256 tokenId = _nextTokenId++;
 		minted[msg.sender] = true;
